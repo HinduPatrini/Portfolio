@@ -93,9 +93,9 @@ const Projects = () => {
       liveUrl: 'https://cine-scope-eight-nu.vercel.app/',
       githubUrl: 'https://github.com/HinduPatrini/CineScope',
       images: [
-        '/photos/cinescope/ss1.jpg',
-        '/photos/cinescope/ss2.jpg',
-        '/photos/cinescope/ss3.jpg',
+        '/photos/cinescope/ss1.png',
+        '/photos/cinescope/ss2.png',
+        '/photos/cinescope/ss3.png',
       ],
     },
     {
@@ -106,9 +106,9 @@ const Projects = () => {
       liveUrl: 'https://flavr-seven.vercel.app/',
       githubUrl: 'https://github.com/HinduPatrini/Flavr',
       images: [
-        '/photos/flavr/ss1.jpg',
-        '/photos/flavr/ss2.jpg',
-        '/photos/flavr/ss3.jpg',
+        '/photos/flavr/ss1.png',
+        '/photos/flavr/ss2.png',
+        '/photos/flavr/ss3.png',
       ],
     },
     {
@@ -119,9 +119,9 @@ const Projects = () => {
       liveUrl: 'https://chattr-sandy.vercel.app/',
       githubUrl: 'https://github.com/HinduPatrini/Chattr',
       images: [
-        '/photos/chattr/ss1.jpg',
-        '/photos/chattr/ss2.jpg',
-        '/photos/chattr/ss3.jpg',
+        '/photos/chattr/ss1.png',
+        '/photos/chattr/ss2.png',
+        '/photos/chattr/ss3.png',
       ],
     },
   ];
