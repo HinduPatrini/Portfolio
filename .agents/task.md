@@ -1,0 +1,27 @@
+# Developer Portfolio Tasks
+
+- [x] Setup dependencies and configuration files
+  - [x] Update `package.json` to include `react`, `react-dom`, `vite`, and `@vitejs/plugin-react`
+  - [x] Run `npm install` to install dependencies
+  - [x] Create `vite.config.js`
+  - [x] Create `tailwind.config.js` with theme colors and fonts
+  - [x] Create `postcss.config.js`
+  - [x] Create `index.html` with Google Fonts and root node
+- [x] Add core styles and entrypoints
+  - [x] Create `src/index.css` with custom styles (scrollbar, theme transitions, animations)
+  - [x] Create `src/main.jsx`
+  - [x] Create `src/App.jsx` with dark/light mode state and root layout
+- [x] Implement components
+  - [x] Create `src/components/Sidebar.jsx` (Navigation, Monogram H, theme toggle)
+  - [x] Create `src/components/Hero.jsx` (Splash intro, monogram logo, social buttons, scroll CTA)
+  - [x] Create `src/components/About.jsx` (Bio, education timeline, frontend/backend/tools grid)
+  - [x] Create `src/components/Services.jsx` (8 service cards with custom micro-interactions)
+  - [x] Create `src/components/Projects.jsx` (CineScope, Flavr, Chattr cards with image carousels)
+  - [x] Create `src/components/Contact.jsx` (Formspree contact form with error handling/success state)
+  - [x] Create `src/components/Footer.jsx` (Logo, copyright, taglines, social handles)
+- [x] Generate visual assets
+  - [x] Configure image carousels with beautiful Unsplash fallback UI mockups
+- [x] Verify website functions
+  - [x] Run `npm run build` to verify compiling works
+  - [x] Run `npm run preview` to verify bundle correctness
+  - [x] Manual checks on layout responsiveness and interactivity

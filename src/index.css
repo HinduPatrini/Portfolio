@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans selection:bg-accent selection:text-white transition-colors duration-300;
+  }
+
+  /* Custom focus style for accessibility */
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-2;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0e1015;
+}
+.light ::-webkit-scrollbar-track {
+  background: #fcfbf7;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #272a34;
+  border-radius: 4px;
+}
+.light ::-webkit-scrollbar-thumb {
+  background: #e2dfd5;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6e5cf5;
+}
+
+/* Premium developer console grid background */
+.bg-grid {
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, rgba(110, 92, 245, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(110, 92, 245, 0.04) 1px, transparent 1px);
+}
+.light .bg-grid {
+  background-image: 
+    linear-gradient(to right, rgba(110, 92, 245, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(110, 92, 245, 0.03) 1px, transparent 1px);
+}
+
+/* Glow effects */
+.glow-accent {
+  box-shadow: 0 0 50px -12px rgba(0, 242, 254, 0.25), 0 0 50px -12px rgba(110, 92, 245, 0.25);
+}
+
+.glow-logo {
+  box-shadow: 0 0 20px -5px rgba(0, 242, 254, 0.4), 0 0 20px -5px rgba(110, 92, 245, 0.4);
+}
+
+.glow-card-hover:hover {
+  box-shadow: 0 12px 40px -15px rgba(0, 242, 254, 0.15), 0 12px 40px -15px rgba(110, 92, 245, 0.15);
+}
