@@ -54,17 +54,21 @@ const Hero = () => {
           Available for Freelance Projects
         </motion.div>
 
-        {/* Custom Monogram Logo */}
+        {/* Custom Logo */}
         <motion.div
           variants={itemVariants}
           className="mb-8 relative group cursor-default select-none"
         >
           {/* Outer Ring Glow */}
-          <div className="absolute inset-0 rounded-[28px] bg-gradient-to-tr from-[#a5f3fc] to-[#fbcfe8] opacity-50 blur-md group-hover:opacity-85 transition-opacity duration-300" />
-          
-          <div className="relative w-24 h-24 md:w-28 md:h-28 rounded-3xl bg-gradient-to-tr from-[#a5f3fc] to-[#fbcfe8] p-[2.5px] shadow-lg group-hover:scale-105 transition-transform duration-300 ease-out">
-            <div className="w-full h-full rounded-[22px] bg-gradient-to-tr from-[#a5f3fc] to-[#fbcfe8] flex items-center justify-center font-display font-extrabold text-slate-800 text-5xl md:text-6xl group-hover:scale-110 transition-transform duration-300 select-none">
-              H
+          <div className="absolute inset-0 rounded-[28px] bg-gradient-to-tr from-[#a5f3fc] to-[#fbcfe8] opacity-50 blur-md group-hover:opacity-90 transition-opacity duration-300" />
+
+          <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-3xl bg-gradient-to-tr from-[#a5f3fc] to-[#fbcfe8] p-[3px] shadow-xl group-hover:scale-105 transition-transform duration-300 ease-out">
+            <div className="w-full h-full rounded-[22px] overflow-hidden bg-darkBg">
+              <img
+                src="/photos/H_logo.jpeg"
+                alt="Hindu Patrini Logo"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
+              />
             </div>
           </div>
         </motion.div>
