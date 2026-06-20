@@ -26,7 +26,7 @@ const Sidebar = ({ darkMode, toggleDarkMode }) => {
       {/* Mobile Top bar */}
       <header className="md:hidden fixed top-0 left-0 right-0 h-16 bg-white/80 dark:bg-darkBg/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/80 z-40 flex items-center justify-between px-6 transition-colors duration-300">
         <a href="#home" onClick={(e) => handleNavClick(e, '#home')} className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-accent-light to-accent flex items-center justify-center font-display font-bold text-white text-lg glow-logo">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#a5f3fc] to-[#fbcfe8] flex items-center justify-center font-display font-extrabold text-slate-800 text-lg glow-logo">
             H
           </div>
           <span className="font-display font-bold tracking-tight text-slate-800 dark:text-slate-100">Hindu Patrini</span>
@@ -65,7 +65,7 @@ const Sidebar = ({ darkMode, toggleDarkMode }) => {
           <div>
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-accent-light to-accent flex items-center justify-center font-display font-bold text-white text-lg">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#a5f3fc] to-[#fbcfe8] flex items-center justify-center font-display font-extrabold text-slate-800 text-lg">
                   H
                 </div>
                 <span className="font-display font-bold tracking-tight text-slate-800 dark:text-slate-100">Hindu Patrini</span>
@@ -118,7 +118,7 @@ const Sidebar = ({ darkMode, toggleDarkMode }) => {
             onClick={(e) => handleNavClick(e, '#home')}
             className="flex items-center gap-4 mb-12 px-2 w-full transition-all duration-300"
           >
-            <div className="w-12 h-12 shrink-0 rounded-2xl bg-gradient-to-tr from-accent-light to-accent flex items-center justify-center font-display font-bold text-white text-xl shadow-lg hover:shadow-accent/40 duration-300 select-none">
+            <div className="w-12 h-12 shrink-0 rounded-2xl bg-gradient-to-tr from-[#a5f3fc] to-[#fbcfe8] flex items-center justify-center font-display font-extrabold text-slate-800 text-xl shadow-lg hover:shadow-accent/40 duration-300 select-none">
               H
             </div>
             <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-hidden whitespace-nowrap">

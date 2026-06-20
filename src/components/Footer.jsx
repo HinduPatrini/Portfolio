@@ -24,7 +24,7 @@ const Footer = () => {
             onClick={(e) => handleScrollTo(e, '#home')}
             className="flex items-center gap-3.5 group select-none"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-accent-light to-accent flex items-center justify-center font-display font-bold text-white text-lg group-hover:scale-105 transition-transform duration-200">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#a5f3fc] to-[#fbcfe8] flex items-center justify-center font-display font-extrabold text-slate-800 text-lg group-hover:scale-105 transition-transform duration-200">
               H
             </div>
             <span className="font-display font-extrabold tracking-tight text-slate-800 dark:text-slate-100">
