@@ -5,73 +5,148 @@ import { FaGithub } from 'react-icons/fa';
 
 const ProjectCarousel = ({ images, title, onImageClick }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(0); // -1 = left, 1 = right
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchDeltaX, setTouchDeltaX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const SWIPE_THRESHOLD = 40; // px needed to trigger a swipe
+
+  const goTo = (newIndex, dir) => {
+    setDirection(dir);
+    setCurrentIndex(newIndex);
+  };
 
   const prevSlide = (e) => {
     e.stopPropagation();
-    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    goTo(currentIndex === 0 ? images.length - 1 : currentIndex - 1, -1);
   };
 
   const nextSlide = (e) => {
     e.stopPropagation();
-    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    goTo(currentIndex === images.length - 1 ? 0 : currentIndex + 1, 1);
+  };
+
+  // Touch handlers
+  const handleTouchStart = (e) => {
+    setTouchStartX(e.touches[0].clientX);
+    setTouchDeltaX(0);
+    setIsDragging(false);
+  };
+
+  const handleTouchMove = (e) => {
+    if (touchStartX === null) return;
+    const delta = e.touches[0].clientX - touchStartX;
+    setTouchDeltaX(delta);
+    if (Math.abs(delta) > 10) setIsDragging(true);
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartX === null) return;
+    if (touchDeltaX < -SWIPE_THRESHOLD) {
+      // Swiped Left → next slide
+      goTo(currentIndex === images.length - 1 ? 0 : currentIndex + 1, 1);
+    } else if (touchDeltaX > SWIPE_THRESHOLD) {
+      // Swiped Right → prev slide
+      goTo(currentIndex === 0 ? images.length - 1 : currentIndex - 1, -1);
+    }
+    setTouchStartX(null);
+    setTouchDeltaX(0);
+    setIsDragging(false);
+  };
+
+  const slideVariants = {
+    enter: (dir) => ({ x: dir > 0 ? '100%' : '-100%', opacity: 0 }),
+    center: { x: 0, opacity: 1 },
+    exit: (dir) => ({ x: dir > 0 ? '-100%' : '100%', opacity: 0 }),
   };
 
   return (
-    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-900 border border-slate-200 dark:border-slate-800 group/carousel">
-      {/* Slides */}
-      <div 
+    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-900 border border-slate-200 dark:border-slate-800 group/carousel select-none">
+
+      {/* Animated Slide Area */}
+      <div
         className="w-full h-full relative cursor-zoom-in"
-        onClick={() => onImageClick(images[currentIndex])}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onClick={() => { if (!isDragging) onImageClick(images[currentIndex]); }}
       >
-        <img
-          src={images[currentIndex]}
-          alt={`${title} screenshot ${currentIndex + 1}`}
-          className="w-full h-full object-cover object-top select-none transition-transform duration-500 group-hover/carousel:scale-[1.02]"
-          onError={(e) => {
-            // Fallback inside error handler if image not found
-            e.target.onerror = null;
-            e.target.src = `https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop`;
-          }}
-        />
-        {/* Click to expand hover overlay */}
-        <div className="absolute inset-0 bg-black/30 opacity-0 group-hover/carousel:opacity-100 flex items-center justify-center transition-all duration-300">
-          <span className="px-4 py-2 rounded-xl bg-slate-950/80 backdrop-blur border border-white/10 text-white text-xs font-mono tracking-wide flex items-center gap-1.5 shadow-xl scale-95 group-hover/carousel:scale-100 transition-all duration-300">
+        <AnimatePresence initial={false} custom={direction} mode="popLayout">
+          <motion.img
+            key={currentIndex}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
+            src={images[currentIndex]}
+            alt={`${title} screenshot ${currentIndex + 1}`}
+            draggable={false}
+            className="absolute inset-0 w-full h-full object-cover object-top"
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = `https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop`;
+            }}
+          />
+        </AnimatePresence>
+
+        {/* Click to expand hover overlay — hidden on mobile touch */}
+        <div className="absolute inset-0 bg-black/30 opacity-0 group-hover/carousel:opacity-100 hidden sm:flex items-center justify-center transition-all duration-300 pointer-events-none">
+          <span className="px-4 py-2 rounded-xl bg-slate-950/80 backdrop-blur border border-white/10 text-white text-xs font-mono tracking-wide flex items-center gap-1.5 shadow-xl">
             <Maximize2 size={12} /> Expand Image
           </span>
         </div>
-        {/* Visual Vignette overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+
+        {/* Vignette */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none z-10" />
       </div>
 
-      {/* Navigation Arrows */}
+      {/* Swipe hint — visible only on mobile, fades out */}
+      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-between px-3 sm:hidden z-20 pointer-events-none">
+        <div className="w-8 h-8 rounded-full bg-black/40 backdrop-blur flex items-center justify-center">
+          <ChevronLeft size={16} className="text-white/80" />
+        </div>
+        <div className="w-8 h-8 rounded-full bg-black/40 backdrop-blur flex items-center justify-center">
+          <ChevronRight size={16} className="text-white/80" />
+        </div>
+      </div>
+
+      {/* Desktop Navigation Arrows */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/70 border border-slate-800 text-white flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 focus:opacity-100 hover:bg-slate-900 transition-all duration-200 active:scale-95"
+        className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/70 border border-slate-700 text-white hidden sm:flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 focus:opacity-100 hover:bg-slate-800 transition-all duration-200 active:scale-95 z-20"
         aria-label="Previous screenshot"
       >
         <ChevronLeft size={20} />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/70 border border-slate-800 text-white flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 focus:opacity-100 hover:bg-slate-900 transition-all duration-200 active:scale-95"
+        className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/70 border border-slate-700 text-white hidden sm:flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 focus:opacity-100 hover:bg-slate-800 transition-all duration-200 active:scale-95 z-20"
         aria-label="Next screenshot"
       >
         <ChevronRight size={20} />
       </button>
 
-      {/* Bullet Indicators */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2">
+      {/* Slide counter badge (mobile) */}
+      <div className="absolute top-3 right-3 sm:hidden px-2.5 py-1 rounded-full bg-black/50 backdrop-blur text-white text-[10px] font-mono z-20">
+        {currentIndex + 1} / {images.length}
+      </div>
+
+      {/* Dot Indicators */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
         {images.map((_, idx) => (
           <button
             key={idx}
             onClick={(e) => {
               e.stopPropagation();
-              setCurrentIndex(idx);
+              goTo(idx, idx > currentIndex ? 1 : -1);
             }}
             className={`h-1.5 rounded-full transition-all duration-300 ${
-              currentIndex === idx 
-                ? 'w-6 bg-accent' 
-                : 'w-1.5 bg-white/50 hover:bg-white/80'
+              currentIndex === idx
+                ? 'w-6 bg-white shadow-md'
+                : 'w-1.5 bg-white/40 hover:bg-white/70'
             }`}
             aria-label={`Go to slide ${idx + 1}`}
           />
