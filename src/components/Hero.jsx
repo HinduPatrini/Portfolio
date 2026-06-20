@@ -63,7 +63,7 @@ const Hero = () => {
           <div className="absolute inset-0 rounded-[28px] bg-gradient-to-tr from-[#a5f3fc] to-[#fbcfe8] opacity-50 blur-md group-hover:opacity-85 transition-opacity duration-300" />
           
           <div className="relative w-24 h-24 md:w-28 md:h-28 rounded-3xl bg-gradient-to-tr from-[#a5f3fc] to-[#fbcfe8] p-[2.5px] shadow-lg group-hover:scale-105 transition-transform duration-300 ease-out">
-            <div className="w-full h-full rounded-[22px] bg-white dark:bg-[#0e1015] flex items-center justify-center font-display font-extrabold text-transparent bg-clip-text bg-gradient-to-tr from-[#a5f3fc] to-[#fbcfe8] text-5xl md:text-6xl group-hover:scale-110 transition-transform duration-300 select-none">
+            <div className="w-full h-full rounded-[22px] bg-gradient-to-tr from-[#a5f3fc] to-[#fbcfe8] flex items-center justify-center font-display font-extrabold text-slate-800 text-5xl md:text-6xl group-hover:scale-110 transition-transform duration-300 select-none">
               H
             </div>
           </div>
