@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ExternalLink, ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
 
-const ProjectCarousel = ({ images, title }) => {
+const ProjectCarousel = ({ images, title, onImageClick }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const prevSlide = (e) => {
@@ -19,7 +19,10 @@ const ProjectCarousel = ({ images, title }) => {
   return (
     <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-900 border border-slate-200 dark:border-slate-800 group/carousel">
       {/* Slides */}
-      <div className="w-full h-full relative">
+      <div 
+        className="w-full h-full relative cursor-zoom-in"
+        onClick={() => onImageClick(images[currentIndex])}
+      >
         <img
           src={images[currentIndex]}
           alt={`${title} screenshot ${currentIndex + 1}`}
@@ -30,6 +33,12 @@ const ProjectCarousel = ({ images, title }) => {
             e.target.src = `https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop`;
           }}
         />
+        {/* Click to expand hover overlay */}
+        <div className="absolute inset-0 bg-black/30 opacity-0 group-hover/carousel:opacity-100 flex items-center justify-center transition-all duration-300">
+          <span className="px-4 py-2 rounded-xl bg-slate-950/80 backdrop-blur border border-white/10 text-white text-xs font-mono tracking-wide flex items-center gap-1.5 shadow-xl scale-95 group-hover/carousel:scale-100 transition-all duration-300">
+            <Maximize2 size={12} /> Expand Image
+          </span>
+        </div>
         {/* Visual Vignette overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
       </div>
@@ -73,6 +82,8 @@ const ProjectCarousel = ({ images, title }) => {
 };
 
 const Projects = () => {
+  const [lightboxImg, setLightboxImg] = useState(null);
+
   const projectsList = [
     {
       title: 'CineScope',
@@ -147,7 +158,7 @@ const Projects = () => {
               >
                 {/* Visual Media Pane (Carousel) */}
                 <div className="w-full lg:w-1/2">
-                  <ProjectCarousel images={project.images} title={project.title} />
+                  <ProjectCarousel images={project.images} title={project.title} onImageClick={setLightboxImg} />
                 </div>
 
                 {/* Project Info Pane */}
@@ -209,6 +220,48 @@ const Projects = () => {
         </div>
 
       </div>
+
+      {/* Fullscreen Lightbox Modal */}
+      <AnimatePresence>
+        {lightboxImg && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setLightboxImg(null)}
+            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 cursor-zoom-out"
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setLightboxImg(null)}
+              className="absolute top-6 right-6 p-3 rounded-full bg-slate-900/60 border border-white/10 text-white hover:bg-slate-800 transition-colors focus:ring-1 focus:ring-accent"
+              aria-label="Close image modal"
+            >
+              <X size={20} />
+            </button>
+
+            {/* Image container */}
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 280 }}
+              className="relative max-w-5xl max-h-[85vh] overflow-hidden rounded-2xl border border-white/10 shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={lightboxImg}
+                alt="Expanded project screenshot"
+                className="w-full h-auto max-h-[85vh] object-contain select-none"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = `https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&auto=format&fit=crop`;
+                }}
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
