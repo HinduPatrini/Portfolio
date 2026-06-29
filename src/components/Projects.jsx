@@ -199,6 +199,19 @@ const Projects = () => {
         '/photos/chattr/ss3.png',
       ],
     },
+    {
+      title: 'Resumify',
+      tagline: 'Build your resume, land your dream job.',
+      description: 'A full-featured resume builder that lets users craft professional, ATS-friendly resumes with live preview and one-click PDF export. Built with a modern component-driven architecture and smooth animations for a premium user experience.',
+      tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Tailwind CSS', 'Redux Toolkit', 'Framer Motion', 'TypeScript', 'Next.js', 'Shadcn UI', 'React PDF / jsPDF', 'Vite'],
+      liveUrl: 'https://resumify-flame.vercel.app/',
+      githubUrl: 'https://github.com/HinduPatrini/Resumify',
+      images: [
+        '/photos/resumify/ss1.png',
+        '/photos/resumify/ss2.png',
+        '/photos/resumify/ss3.png',
+      ],
+    },
   ];
 
   return (
